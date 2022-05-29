@@ -1,3 +1,5 @@
+from os import name
+from turtle import title
 from django.test import TestCase
 from .models import Editor,Article,tags
 
@@ -13,4 +15,22 @@ class EditorTestClass(TestCase):
         self.james.save_editor()
         editors = Editor.objects.all()
         self.assertTrue(len(editors) > 0)
+  
+class TagsTestClass(TestCase):
+  # Set up method
+     def setUp(self):
+            self.james = tags(name ='Welcome to my tribune')
+            # Testing instance
+     def test_instance(self):
+       self.assertTrue(isinstance(self.james,tags))
+class ArticleTestClass(TestCase):
+  # Set up method
+  def setUp(self):
+    self.james = Article(title = 'Breaking News', post ='Ukraine resolved a peace treaty')
+    # Testing instance
+  def test_instance(self):
+    self.assertTrue(isinstance(self.james,Article))
+      
+        
+         
              
