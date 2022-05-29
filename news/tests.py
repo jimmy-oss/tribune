@@ -1,7 +1,6 @@
-from os import name
 from turtle import title
 from django.test import TestCase
-from .models import Editor,Article,tags, todays_news 
+from .models import Editor,Article,tags
 import datetime as dt
 
 class EditorTestClass(TestCase):
@@ -51,6 +50,7 @@ class ArticleTestClass(TestCase):
         Editor.objects.all().delete()
         tags.objects.all().delete()
         Article.objects.all().delete()
+        
 def test_get_news_by_date(self):
         test_date = '2017-03-17'
         date = dt.datetime.strptime(test_date, '%Y-%m-%d').date()
