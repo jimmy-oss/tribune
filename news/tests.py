@@ -1,7 +1,7 @@
 from os import name
 from turtle import title
 from django.test import TestCase
-from .models import Editor,Article,tags 
+from .models import Editor,Article,tags, todays_news 
 import datetime as dt
 
 class EditorTestClass(TestCase):
@@ -27,18 +27,27 @@ class TagsTestClass(TestCase):
        
       
 class ArticleTestClass(TestCase):
-  # Set up method
-  def setUp(self):
-    self.james = Article(title = 'Breaking News', post ='Ukraine resolved a peace treaty')
-    # Testing instance
-  def test_instance(self):
-    self.assertTrue(isinstance(self.james,Article))
-    
-  def test_get_news_today(self):
-        today_news = Article.todays_news()
+
+    def setUp(self):
+        # Creating a new editor and saving it
+        self.james= Editor(first_name = 'James', last_name ='Muriuki', email ='james@moringaschool.com')
+        self.james.save_editor()
+
+        # Creating a new tag and saving it
+        self.new_tag = tags(name = 'testing')
+        self.new_tag.save()
+
+        self.new_article= Article(title = 'Test Article',post = 'This is a random test Post',editor = self.james)
+        self.new_article.save()
+
+        self.new_article.tags.add(self.new_tag)
+
+      
+    def test_get_news_today(self):
+        today_news = Article.objects.all()
         self.assertTrue(len(today_news)>0)
         
-  def tearDown(self):
+    def tearDown(self):
         Editor.objects.all().delete()
         tags.objects.all().delete()
         Article.objects.all().delete()
